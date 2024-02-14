@@ -2,8 +2,10 @@ import express from "express"
 import env from "dotenv"
 import cors from "cors"
 import authRouter from "./Routes/auth.route.mjs"
+import * as db from "./Database/db.mjs"
 
 env.config()
+db.connect(process.env.AUTH_DB)
 
 const app = express()
 
