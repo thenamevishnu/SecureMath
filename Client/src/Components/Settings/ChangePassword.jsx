@@ -40,7 +40,7 @@ const ChangePassword = () => {
                 <h1 className="font-bold text-center">Change Password</h1>
                 <input type="password" value={formData.currentPassword} onChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })} placeholder="Current password" name="currentPassword" className="p-2 rounded-xl outline-none" />
                 <input type="password" value={formData.newPassword} onChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })} placeholder="New password" name="newPassword" className="p-2 rounded-xl outline-none" />
-                <button className="bg-green-700 rounded-xl p-2 text-white">Login</button>
+                <button className="bg-green-700 rounded-xl p-2 text-white">Change</button>
             </form>
         </div>
     )

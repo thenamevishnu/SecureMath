@@ -34,7 +34,7 @@ const Login = () => {
     return (
         <div className="w-screen flex justify-center px-2">
             <form className="mt-10 flex flex-col gap-4 p-5 bg-[#ccc] rounded-xl w-full sm:w-[500px]" onSubmit={handleSubmit}>
-                <h1 className="font-bold text-center">SignUp</h1>
+                <h1 className="font-bold text-center">Login</h1>
                 <input type="text" value={formData.username} onChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })} placeholder="username" name="username" className="p-2 rounded-xl outline-none" />
                 <input type="password" value={formData.password} onChange={e => setFormData({ ...formData, [e.target.name]: e.target.value })} placeholder="password" name="password" className="p-2 rounded-xl outline-none" />
                 <button className="bg-green-700 rounded-xl p-2 text-white">Login</button>
