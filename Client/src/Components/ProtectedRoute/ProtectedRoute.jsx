@@ -2,7 +2,7 @@ import { Navigate } from "react-router-dom"
 
 const ProtectedRoute = ({ children, login, signup }) => {
 
-    const token = document.cookie
+    const token = localStorage.getItem("__token__")
 
     if (token) {
         if (signup || login) {
