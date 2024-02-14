@@ -10,6 +10,7 @@ const Transaction = () => {
 
     const [formData, setFormData] = useState({ firstNumber: "", secondNumber: "", user_id: user_id })
     const [transactions, setTransactions] = useState([])
+    const [result, setResult] = useState("")
     const navigate = useNavigate()
 
     const resetState = () => {
@@ -43,6 +44,7 @@ const Transaction = () => {
             formData.secondNumber = parseFloat(formData.secondNumber)
             const { data } = await api.post(`/transaction/transaction`, formData)
             if (data.result) {
+                setResult(data.result.result)
                 setTransactions((prev) => ([data.result, ...prev]))
                 resetState()
             } else {
@@ -70,6 +72,7 @@ const Transaction = () => {
                 <h1 className="font-bold text-center">History</h1>
                 <input type="text" value={formData.firstNumber} onChange={e => setFormData({ ...formData, [e.target.name]: (e.target.value) })} placeholder="First Number" name="firstNumber" className="p-2 rounded-xl outline-none" />
                 <input type="text" value={formData.secondNumber} onChange={e => setFormData({ ...formData, [e.target.name]: (e.target.value) })} placeholder="Second Number" name="secondNumber" className="p-2 rounded-xl outline-none" />
+                <div className="text-center">Result: {result}</div>
                 <button className="bg-green-700 rounded-xl p-2 text-white">Submit</button>
             </form>
             <div className="mt-4 bg-[#ddd] p-3 flex flex-col gap-2 sm:w-[500px] rounded-xl">
