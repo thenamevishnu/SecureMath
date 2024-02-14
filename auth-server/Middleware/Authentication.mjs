@@ -12,7 +12,6 @@ export const Authentication = async (req, res, next) => {
             })
         }
         const jwtToken = token.split(" ")?.[1]
-        console.log(jwtToken);
         if(!jwtToken){
             return res.status(401).send({
                 message: "Authorization failed"
@@ -20,7 +19,6 @@ export const Authentication = async (req, res, next) => {
         }
         const auth = jwt.verify(jwtToken, process.env.AUTH_JWT_KEY)
         const now = Math.floor(new Date().getTime() / 1000)
-        console.log(auth);
         if (auth.exp <= now) {
             return res.status(401).send({
                 message: "Authorization failed"

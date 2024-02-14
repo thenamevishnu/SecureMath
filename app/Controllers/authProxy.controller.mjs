@@ -5,6 +5,7 @@ const signup = async (req, res) => {
         const { data: response } = await authServer.post("/signup", req.body)
         return res.send(response)
     } catch (err) {
+        console.log(err);
         return res.status(500).send({
             message: err.response?.data?.message || err.message || "Internal server error"
         })

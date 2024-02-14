@@ -2,6 +2,7 @@ import bcrypt from "bcrypt"
 import { authDB } from "../Models/auth.model.mjs"
 import jwt from "jsonwebtoken"
 import env from "dotenv"
+import { Types } from "mongoose"
 
 env.config()
 
@@ -43,6 +44,7 @@ const signup = async (req, res) => {
         })
         if (response._id) {
             return res.status(201).send({
+                result: response._id,
                 message: "new user created"
             })
         }
@@ -99,10 +101,10 @@ const login = async (req, res) => {
 
 const changePassword = async (req, res) => {
     try {
-        const { username, currentPassword, newPassword } = req.body
-        if (!username) {
+        const { user_id, currentPassword, newPassword } = req.body
+        if (!user_id) {
             return res.status(400).send({
-                message: "username is empty"
+                message: "user_id is empty"
             })
         }
         if (!currentPassword) {
@@ -116,11 +118,17 @@ const changePassword = async (req, res) => {
             })
         }
         const findUser = await authDB.findOne({
-            username: username
+            _id: user_id
         })
         if (!findUser) {
             return res.status(404).send({
                 message: "user not found"
+            })
+        }
+        const checkCurrentPassword = await bcrypt.compare(currentPassword, findUser.password)
+        if (!checkCurrentPassword) {
+            return res.status(400).send({
+                message: "Current password is not correct"
             })
         }
         const isCurrentPassword = await bcrypt.compare(newPassword, findUser.password)
@@ -131,7 +139,7 @@ const changePassword = async (req, res) => {
         }
         const encryptedPassword = await bcrypt.hash(newPassword, 10)
         const response = await authDB.updateOne({
-            username: username
+            _id: user_id
         }, {
             $set: {
                 password: encryptedPassword

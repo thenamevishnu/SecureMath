@@ -32,7 +32,12 @@ const addTransaction = async (req, res) => {
         })
         if (response) {
             return res.status(201).send({
-                result: result,
+                result: {
+                    _id: response,
+                    first_number: firstNumber,
+                    second_number: secondNumber,
+                    result: result
+                },
                 message: "success"
             })
         }
